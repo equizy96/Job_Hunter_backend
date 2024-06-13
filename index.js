@@ -14,6 +14,20 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://jobhunterudarax.netlify.app'); // Update this to your client's origin
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
+
+app.options('*', (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'https://jobhunterudarax.netlify.app');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.send();
+});
+
 const genAI = new GoogleGenerativeAI("AIzaSyBBk40GdC4cwITxkCsgT8vdChRpOUMFNGM");
 let transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
